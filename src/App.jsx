@@ -1,36 +1,15 @@
 import './App.css'
 import NavBar from './components/Navbar'
 import landing_img from './assets/fondo.png'
-import axios from 'axios'; 
-import React, { useState, useEffect } from 'react';
 import {useNavigate } from 'react-router-dom';
-import API_URL from "./config"
 
 function App() {
-  const [selectedGameId, setSelectedGameId] = useState(null);
-  const handleGameSelection = (gameId) => {
-    console.log(gameId);
-    setSelectedGameId(gameId);
-  };
   const navigate = useNavigate();
 
-
-  useEffect(() => {
-    if (selectedGameId) {
-      navigate('/searchgame');
-      axios.get(`${API_URL}/games/${selectedGameId}`)
-        .then((response) => {
-          console.log(response);
-          if (response.ingresar) {
-            navigate('/searchgame');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [selectedGameId]);
-
+  const handleGameSelection = (gameId) => {
+    navigate(`/searchgame/${gameId}`);
+  };
+  
   return (
     <>
     <NavBar/>

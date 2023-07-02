@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import NavBar from '../../components/Navbar';
 import axios from 'axios';
 import AuthContext from '../../auth/AuthContext';
-import API_URL from '../../config';
+import {useNavigate } from 'react-router-dom';
+
 
 
 function Singup() {
@@ -11,6 +12,7 @@ function Singup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
   
     const handleSubmit = async (event) => {
@@ -18,16 +20,14 @@ function Singup() {
       console.log(email);
       console.log(password);
       console.log(username);
-    //   enviar post a ruta login
-      axios.post(`${API_URL}/singup`, {
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/authentication/signup`, {
         username,
         email,
         password
       }).then((response) => {
         console.log(response);
-        // const access_token = response.data.access_token;
-        // setToken(access_token);
-  
+        navigate('/login');
+
       }).catch((error) => {
         console.log(error)
       })

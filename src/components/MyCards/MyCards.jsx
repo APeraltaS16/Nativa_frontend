@@ -9,6 +9,11 @@ import lilypadYellowSvg from "../../assets/img/lilypad-yellow-color-assist.svg";
 
 function MyCards({objects}) {
     const gameData = useContext(GameContext);
+    console.log("El color es " + gameData.color);
+
+    if (!gameData.board) {
+        return null;
+      }
     
     return(
       
@@ -35,7 +40,7 @@ function MyCards({objects}) {
             
             <div> Mi color:</div>
             <div> 
-                {objects[gameData.playerId]}
+                {objects[gameData.color - 1]}
             </div>
         </div>
     )

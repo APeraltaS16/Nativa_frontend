@@ -7,46 +7,70 @@ import GameScore from "../../components/GameScore/GameScore";
 import "./Game.css"
 import axios from "axios";
 export const GameContext = createContext();
-import API_URL from "../../config"
+import AuthContext from "../../auth/AuthContext";
+import {useNavigate } from 'react-router-dom';
+
 
 function Game() {
+    const { playerId, token } = useContext(AuthContext);
+    const [stone_1, setStone1] = useState([-1, -1]);
+    const [stone_2, setStone2] = useState([-1, -1]);
+    const [roadId, setRoadId] = useState(null);
+    const navigate = useNavigate();
 
-    let road_1 = [-1, -1]
-    let road_2 = [-1, -1]
-    let roadId = 0
 
     const sliderObjectsArray = {frogs: [
       <FrogImg src="src/assets/img/frog-yellow.svg" />,
-      <FrogImg src='src/assets/img/frog-green.svg' />,
       <FrogImg src='src/assets/img/frog-red.svg' />,
+      <FrogImg src='src/assets/img/frog-green.svg' />,
     ]}
 
 
     const [gameData, setGameData] = useState({});
-   
  
+    const actualizarBoard = async () => {
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/boards/update`, {
+          userid: playerId
+        }, {
+          'headers': {
+              'Authorization': `Bearer ${token}`
+          },
+        });
+        const updatedGameData = response.data;
+        setGameData(updatedGameData);
 
-    // Para iniciar partida
-    // useEffect(() => {
-    //   axios.get(`${API_URL}/ready`) 
-    //   .then((response) => {
-    //     const updatedGameData = response.data[0];
-    //     setGameData(updatedGameData);
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   })
-    // }, [])
+        //Comentar en caso de que no funcione
+        if (updatedGameData.gameOver) {
+          navigate(`/`);
+        }
+        
+        console.log(updatedGameData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  useEffect(() => {
+    actualizarBoard();
+      const interval = setInterval(() => {
+        console.log("actualizando tablero");
+        actualizarBoard();
+      }, 3000);
+      return () => {
+          clearInterval(interval);
+      };
+
+    }, []);
 
     // Funcion que permite comprar caminos. POST
     const buy_road = () => {
-      console.log("Comprando camino");
-
-      if (gameData.current_turn == gameData.playerId && gameData.dict_roads[roadId]) {
-        axios.post(`${API_URL}/roads/buy`, {
-          playerId: gameData.playerId,
-          cards: gameData.my_cards,
-          road: gameData.dict_roads[roadId],
-          game_id: gameData.game_id
+      console.log("Comprando camino numero: " + roadId);
+     
+      if (gameData.current_turn == gameData.color && roadId) {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/roads/buy`, {
+          userid: playerId,
+          road: roadId,
         })
         .then((response) => {
           const updatedGameData = {...gameData, board: response.data.board, scoreId1: response.data.scoreId1, scoreId2: response.data.scoreId2, scoreId3: response.data.scoreId3, current_turn: response.current_turn };
@@ -58,20 +82,23 @@ function Game() {
         console.log("No es tu turno o no seleccionaste ruta");
       }
     }
-
     // Funcion que permite robar cartas
     const buy_card = () => {
       console.log("Robando cartas");
-      if (gameData.current_turn == gameData.playerId) {
+      console.log("mi user id es" + playerId);
+      console.log("mi color es" + gameData.color);
 
-        axios.post(`${API_URL}/roads/buy`, {
-          playerId: gameData.playerId,
-          game_id: gameData.game_id
+      if (gameData.current_turn == gameData.color) {
+
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/cards/buy`, {
+          userid: playerId,
+        }, {
+          'headers': {
+            'Authorization': `Bearer ${token}`
+        },
         })
           .then((response) => {
-            //Me retorna el tablero y puntajes. Los actualizo
-            const updatedGameData = {...gameData, my_cards:response, current_turn: response.current_turn };
-            setGameData(updatedGameData);
+            console.log(response);
           }).catch((error) => {
             console.log(error);
           })
@@ -80,33 +107,59 @@ function Game() {
       }
     } 
 
+    const paint_stone = () => {
+      console.log("Pintando piedras");
+      let id_piedra_actual = -1;
+      //mejorar esto. Caso de que el primero sea seleccionado.
+      if (stone_1[0] != -1 && stone_2[0] == -1) {
+        id_piedra_actual = gameData.dict_nodes[stone_1];
+      } else if (stone_1[0] != -1 && stone_2[0] != -1) {
+        id_piedra_actual = gameData.dict_nodes[stone_2];
+      }
+      console.log("La piedra elegida es: " + id_piedra_actual);
+      if (gameData.current_turn == gameData.color && id_piedra_actual != -1) {
+        console.log("Enviando piedra");
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/nodes/paint`, {
+          userid: playerId,
+          nodeid: id_piedra_actual
+        })
+          .then((response) => {
+            console.log(response);
+
+          }).catch((error) => {
+            console.log(error);
+          })
+      } else {
+        console.log("No es tu turno o no elegiste tu piedra");
+      }
+    }
 
     // Funcion que maneja que caminos mandar. Manda los ultimos dos piedras
     const toggle = (rowIndex, colIndex) => {
-      if (road_1[0] == -1) {
-        road_1[0] = rowIndex
-        road_1[1] = colIndex
-      } else if (road_2[0] == -1) {
-        road_2[0] = rowIndex
-        road_2[1] = colIndex
+      if (stone_1[0] == -1) {
+        setStone1([rowIndex, colIndex]);
+      } else if (stone_2[0] == -1) {
+        setStone2([rowIndex, colIndex]);
       } else {
-        road_1[0] = road_2[0]
-        road_1[1] = road_2[1]
-        road_2[0] = rowIndex
-        road_2[1] = colIndex
+        setStone1([stone_2[0], stone_2[1]]);
+        setStone2([rowIndex, colIndex]);
       }
-      roadId = [gameData.dict_nodes[road_1], gameData.dict_nodes[road_2]]
- 
-      console.log("Road 1: " + road_1);
-      console.log("Road 1: " + road_2);
-      console.log("El camino seleccionado es: " + roadId);
       
-
-      if (gameData.dict_roads[roadId]) {
-        console.log("El id de la ruta es: " + gameData.dict_roads[roadId]);
-      }
-
     };
+    useEffect(() => {
+      // Cuando gameData cambie, actualiza stone1, stone2 y roadId
+      if (gameData && gameData.dict_nodes && gameData.dict_roads) {
+        const newRoadId = gameData.dict_roads[[gameData.dict_nodes[stone_1], gameData.dict_nodes[stone_2]]];
+    
+        if (!newRoadId) {
+          setRoadId(gameData.dict_roads[[gameData.dict_nodes[stone_2], gameData.dict_nodes[stone_1]]]);
+        } else {
+          setRoadId(newRoadId);
+        }
+      }
+      console.log(stone_1);
+      console.log(stone_2);
+    }, [gameData, stone_1, stone_2]);
   
     return(
         <> 
@@ -136,65 +189,10 @@ function Game() {
         <div className="botones-partida">
           <button className="jugar" onClick={buy_card}>Robar carta</button>
           <button className="jugar" onClick={buy_road}>Comprar camino</button>
+          <button className="jugar" onClick={paint_stone}>Pintar Piedra</button>
+
         </div>
         </>
     )
 }
 export default Game
-
-
-   
-// const [gameData, setGameData] = useState({
-//   playerId: 2,
-//   scoreId1: 0,
-//   scoreId2: 0,
-//   scoreId3: 0,
-//   board: [
-//       [0, "a", 0, "a", "a", 0, "v", 0],
-//       ["r", -1, "v", -1, -1, "r", -1, "a"],
-//       ["r", -1, "v", -1, -1, "r", -1, "a"],
-//       [0, "r", 0, "a", "a", 0, "a", 0],
-//       ["a", -1, "v", -1, -1, "v", -1, "v"],
-//       ["a", -1, "v", -1, -1, "v", 0, "v"],
-//       ["a", -1, 0, -1, -1, "v", "r", 0],
-//       [0, "r", "r", "r", "r", 0, 0, -1],
-//     ],
-//   my_cards: [0, 0, 0],
-//   current_turn: 2,
-//   game_id: 1,
-//   dict_nodes: 
-//     {
-//       '0,0': 1,
-//       '0,2': 2,
-//       '0,5': 3,
-//       '0,7': 4,
-//       '3,0': 5,
-//       '3,2': 6,
-//       '3,5': 7,
-//       '3,7': 8,
-//       '5,6': 9,
-//       '6,2': 10,
-//       '6,7': 11,
-//       '7,0': 12,
-//       '7,5': 13,
-//       '7,6': 14,
-//     },
-//   dict_roads: {
-//     '1,2': 1,
-//     '2,3': 2,
-//     '3,4': 3,
-//     '1,5': 4,
-//     '2,6': 5,
-//     '3,7': 6,
-//     '4,8': 7,
-//     '5,6': 8,
-//     '6,7': 9,
-//     '7,8': 10,
-//     '6,10': 11,
-//     '8,11': 12,
-//     '10,11': 13,
-//     '5,12': 14,
-//     '12,13': 15,
-//     '9,14': 16,
-//   }
-// });

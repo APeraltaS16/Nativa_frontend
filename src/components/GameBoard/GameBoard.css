@@ -43,20 +43,32 @@
   width: 50px;
 }
 
-.color-a {
+.color-4 {
   background-color: yellow;
 }
 
 
-.color-v {
+.color-5 {
   background-color: green;
 }
 
 
-.color-r {
+.color-6 {
   background-color: red;
 }
 
 .color--1 {
   background-color: rgb(2, 231, 231);
+}
+
+.color-7 {
+  background-color: yellow;
+}
+
+.color-8 {
+  background-color: red;
+}
+
+.color-9 {
+  background-color: green;
 }

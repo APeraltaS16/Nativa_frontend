@@ -19,7 +19,7 @@ function Routing() {
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/instructions'} element={<Instructions/>}/>
                 <Route path={'/game'} element={<Game/>}/>
-                <Route path={'/searchgame'} element={<UserCheck/>}/>
+                <Route path={'/searchgame/:gameId'} element={<UserCheck/>}/>
                 <Route path={'/singup'} element={<Singup/>}/>
 
 

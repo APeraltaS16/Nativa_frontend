@@ -1,28 +1,40 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import NavBar from '../../components/Navbar';
 import './Login.css';
 import axios from 'axios';
 import AuthContext from '../../auth/AuthContext';
-import API_URL from '../../config';
+
 
 
 function Login() {
-  const {token, setToken} = useContext(AuthContext);
+  const {token, setToken, setPlayerId, playerId} = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    console.log(playerId); // Verificar el valor actualizado de playerId
+  }, [playerId]);
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(email);
     console.log(password);
     // enviar post a ruta login
-    axios.post(`${API_URL}/login`, {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/authentication/login`, {
       email,
       password
     }).then((response) => {
       console.log(response);
       const access_token = response.data.access_token;
-      setToken(access_token);
+      const response_playerId = response.data.playerId;
+      console.log(access_token, response_playerId);
+      
+      if (access_token && response_playerId) {
+        setToken(access_token);
+        setPlayerId(response_playerId);
+      }
+      // Acá puedo re-dirigir a algun componente si quiero
     }).catch((error) => {
       console.log(error)
     })
