@@ -41,6 +41,7 @@ function MyCards({objects}) {
             <div> Mi color:</div>
             <div> 
                 {objects[gameData.color - 1]}
+                {gameData.color === 1 ? 'Amarillo' : gameData.color === 2 ? 'Rojo' : gameData.color === 3 ? 'Verde' : 'Color desconocido'}
             </div>
         </div>
     )
