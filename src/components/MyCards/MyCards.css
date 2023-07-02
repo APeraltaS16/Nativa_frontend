@@ -1,0 +1,38 @@
+.mycards-container {
+    display: flex;
+    gap: 1%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 2%;
+  }
+  
+  .mycards-cartas {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .cartas {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 4%;
+  }
+
+  .FrogImg img {
+    width: 70%;
+    /* height: 70%; */
+  }
+  .cantidad_carta {
+    width: 100%;
+  }
+
+
+  /* .score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+   */
+

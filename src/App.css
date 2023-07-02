@@ -1,0 +1,134 @@
+body {
+  background-color: #adadac;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-family: 'Sigmar', cursive;
+  font-size: 6rem;
+  text-align: center;
+  margin: 0%;
+  color: #2a2a29;
+}
+
+/* NavBar */
+nav ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: center;
+  justify-items: center;
+  background-color: #a2c02d;
+  list-style-type: none;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: 'Sigmar', cursive;
+
+}
+
+nav ul li a{
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+nav ul li{
+  text-decoration: none;
+  background-color:  #a2c02d;
+  text-align: center;
+  width: 90%;
+  line-height: 50px;
+}
+
+nav ul li:hover{
+  background-color: #8ca81f;
+}
+
+
+.imagen-logo {
+  max-width: 15%;
+  height: auto;
+  margin-right: auto;
+  margin-left: 10px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5px;
+
+}
+
+
+/* Boton de jugar */
+.jugar {
+  text-align: center;
+  background-color: #a2c02d;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  padding: 1%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3%;
+  width: 25%;
+  font-family: 'Sigmar', cursive;
+
+}
+
+.jugar:hover{
+  background-color: #8ca81f;
+}
+
+/* Imagen principal */
+.imagen-principal {
+  max-width: 20%;
+  margin-bottom: 50px;
+}
+
+.ayuda-rana {
+  font-family: 'Sigmar', cursive;
+
+}
+
+@media screen and (max-width: 530px){
+  nav ul {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color:  #a2c02d}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color:  #8ca81f;
+}

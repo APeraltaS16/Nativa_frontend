@@ -1,0 +1,62 @@
+
+.team-section {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title h1{
+    font-size: 35px;
+    letter-spacing: 1.5px;
+}
+
+.title p{
+    font-size: 18px;
+    margin: 30px 0px;
+}
+
+
+
+.team-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 50px;
+    grid-gap: 40px;
+
+}
+
+.card {
+    width: 100%;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.card:hover {
+    background-color: #f3f3f3;
+}
+
+.image-section img{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border:6px solid #fff;
+}
+
+.content {
+    /* width: 100px; */
+    text-align: center;
+}
+
+@media screen and (max-width: 900px){
+    .team-card {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+}
+
+/* https://www.youtube.com/watch?v=GuKnS6qVB5Q&t=178s */

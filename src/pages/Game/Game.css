@@ -1,0 +1,14 @@
+  .botones-partida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .botones-partida a {
+    margin: 4%;
+  }
+
+  .board-score-container {
+    display: flex;
+  }

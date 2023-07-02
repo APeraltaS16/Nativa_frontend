@@ -1,0 +1,44 @@
+
+  .rule_card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px; 
+    text-align: center;
+
+    background-color: #a2c02d;
+    width: 100%;
+    box-sizing: border-box;
+    }
+    
+    .rule_title {
+    font-size: 20px; 
+    margin-bottom: 8px; 
+    color: #000;
+    max-width: 100%; 
+    }
+    
+    .rule_text {
+    font-size: 14px; 
+    color: #000;
+
+    max-width: 100%; 
+    max-height: none; 
+    word-wrap: normal; 
+    hyphens: none; 
+    overflow-wrap: normal; 
+    line-height: 1.5; 
+    }
+    
+    .rule_card {
+    width: 100%;
+    max-width: 100%; 
+    height: auto;
+    padding: 10px; 
+    }
+
+    .img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px; 
+    }
+
