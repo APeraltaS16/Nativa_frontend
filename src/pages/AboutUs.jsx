@@ -2,8 +2,8 @@
 import NavBar from '../components/Navbar'
 import '../styles/AboutUs.css'
 
-import avatar_alonso from "../assets/img/AvatarAlonso.svg"
-import avatar_manuel from "../assets/AvatarMaker.png"
+import avatar_alonso from "../../public/assets/img/AvatarAlonso.svg"
+import avatar_manuel from "../../public/assets/AvatarMaker.png"
 
 function AboutUs() {
     return(

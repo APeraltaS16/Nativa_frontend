@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from  '../assets/logo.png'
+import logo from  '../../public/assets/logo.png'
 import { useContext, useEffect, useState } from 'react'
 import AuthContext from '../auth/AuthContext'
 

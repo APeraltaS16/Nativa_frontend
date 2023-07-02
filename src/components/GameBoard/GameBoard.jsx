@@ -2,9 +2,9 @@ import "./GameBoard.css";
 import { useState, createContext, useContext } from "react";
 import { GameContext } from "../../pages/Game/Game.jsx";
 
-import lilypadGreenSvg from "../../assets/img/lilypad-green-color-assist.svg";
-import lilypadRedSvg from "../../assets/img/lilypad-red-color-assist.svg";
-import lilypadYellowSvg from "../../assets/img/lilypad-yellow-color-assist.svg";
+import lilypadGreenSvg from "./../../../public/assets/img/lilypad-green-color-assist.svg";
+import lilypadRedSvg from "../../../public/assets/img/lilypad-red-color-assist.svg";
+import lilypadYellowSvg from "../../../public/assets/img/lilypad-yellow-color-assist.svg";
 
 
 function GameBoard(props) {

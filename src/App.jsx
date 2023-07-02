@@ -1,6 +1,6 @@
 import './App.css'
 import NavBar from './components/Navbar'
-import landing_img from './assets/fondo.png'
+import landing_img from './../public/assets/fondo.png'
 import {useNavigate } from 'react-router-dom';
 
 function App() {

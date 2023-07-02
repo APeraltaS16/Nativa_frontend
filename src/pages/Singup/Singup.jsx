@@ -21,9 +21,9 @@ function Singup() {
       console.log(password);
       console.log(username);
       axios.post(`${import.meta.env.VITE_BACKEND_URL}/authentication/signup`, {
-        username,
-        email,
-        password
+        username:username,
+        email:email,
+        password:password
       }).then((response) => {
         console.log(response);
         navigate('/login');
