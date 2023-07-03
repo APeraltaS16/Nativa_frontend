@@ -1,8 +1,8 @@
 import "../styles/SearchGame.css"
 //importamos la imagenes desde la carpeta public/assets
-import rana_verde from '../../public/assets/img/frog-green.svg'
-import rana_roja from '../../public/assets/img/frog-red.svg'
-import rana_amarilla from '../../public/assets/img/frog-yellow.svg'
+const rana_verde = '/assets/img/frog-green.svg'
+const rana_roja = '/assets/img/frog-red.svg'
+const rana_amarilla = '/assets/img/frog-yellow.svg'
 import NavBar from '../components/Navbar'
 import { useState, useEffect, useContext } from "react";
 import {useNavigate } from 'react-router-dom';
